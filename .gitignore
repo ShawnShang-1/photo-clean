@@ -20,6 +20,16 @@ Package.resolved
 # Carthage
 Carthage/
 
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
 # Misc
 *.swp
 *.swo
