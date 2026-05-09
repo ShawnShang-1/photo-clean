@@ -29,7 +29,7 @@ actor MediaLoader {
                 contentMode: .aspectFill,
                 options: options
             ) { image, _ in
-                Task { continuation.resume(returning: image) }
+                continuation.resume(returning: image)
             }
         }
     }
@@ -50,7 +50,7 @@ actor MediaLoader {
                 contentMode: .aspectFit,
                 options: options
             ) { image, _ in
-                Task { continuation.resume(returning: image) }
+                continuation.resume(returning: image)
             }
         }
     }
@@ -66,7 +66,7 @@ actor MediaLoader {
                 forVideo: asset,
                 options: options
             ) { avAsset, _, _ in
-                Task { continuation.resume(returning: avAsset) }
+                continuation.resume(returning: avAsset)
             }
         }
     }
