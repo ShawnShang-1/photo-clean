@@ -15,31 +15,14 @@ struct MediaInfoView: View {
     @State private var loadedMetadata: MediaMetadata? = nil
     @Environment(\.dismiss) private var dismiss
 
-    // MARK: - 相对时间计算
+    // MARK: - 时间
 
-    /// 计算相对时间字符串，如"10 年前"
     private var relativeTimeString: String {
-        guard let creationDate = asset.creationDate else { return "--" }
-        let now = Date()
-        let components = Calendar.current.dateComponents([.year, .month, .day], from: creationDate, to: now)
-
-        if let years = components.year, years > 0 {
-            return "\(years) 年前"
-        } else if let months = components.month, months > 0 {
-            return "\(months) 个月前"
-        } else if let days = components.day, days > 0 {
-            return "\(days) 天前"
-        } else {
-            return "今天"
-        }
+        asset.creationDate?.relativeString ?? "--"
     }
 
-    /// 绝对时间字符串：2024/3/15 14:32
     private var absoluteTimeString: String {
-        guard let creationDate = asset.creationDate else { return "--" }
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/M/d HH:mm"
-        return formatter.string(from: creationDate)
+        asset.creationDate?.absoluteString ?? "--"
     }
 
     /// 文件名（基于 localIdentifier）

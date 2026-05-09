@@ -14,6 +14,7 @@ final class StatsViewModel: ObservableObject {
     @Published var photoProgress: Double = 0
     @Published var screenshotProgress: Double = 0
     @Published var videoProgress: Double = 0
+    @Published private(set) var storageProgress: Double = 0
 
     // MARK: - 私有
 
@@ -41,6 +42,11 @@ final class StatsViewModel: ObservableObject {
         // 截图没有独立 viewed，用 photoViewed 粗估
         screenshotProgress = ratio(deleted: stats.screenshotDeleted, viewed: stats.photoViewed)
         videoProgress = ratio(deleted: stats.videoDeleted, viewed: stats.videoViewed)
+
+        let estimatedTotalBytes = Int64(stats.totalViewed) * 3 * 1024 * 1024
+        storageProgress = estimatedTotalBytes > 0
+            ? min(Double(stats.bytesFreed) / Double(estimatedTotalBytes), 1.0)
+            : 0
     }
 
     private func ratio(deleted: Int, viewed: Int) -> Double {
@@ -55,14 +61,6 @@ final class StatsViewModel: ObservableObject {
 
     /// 格式化释放空间
     var formattedBytesFreed: String { stats.formattedBytesFreed }
-
-    /// 存储进度（总 bytesFreed / 估算总媒体大小）
-    var storageProgress: Double {
-        // 估算相册总大小：假设平均每张 3MB，按已浏览数估算总浏览规模
-        let estimatedTotalBytes = Int64(stats.totalViewed) * 3 * 1024 * 1024
-        guard estimatedTotalBytes > 0 else { return 0 }
-        return min(Double(stats.bytesFreed) / Double(estimatedTotalBytes), 1.0)
-    }
 
     // MARK: - 暴露给 StatsView 的计算属性
 

@@ -63,11 +63,6 @@ struct VideoBrowserView: View {
         } message: {
             Text("删除后将无法恢复，确定要删除吗？")
         }
-        .overlay {
-            if showToast {
-                toastView
-            }
-        }
     }
 
     // MARK: - 主内容
