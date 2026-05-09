@@ -78,18 +78,21 @@ final class VideoBrowserViewModel: ObservableObject {
         guard let asset = currentAsset else { return }
         Task {
             if let avAsset = await MediaLoader.shared.loadAVAsset(asset) {
+                let url = (avAsset as? AVURLAsset)?.url
                 await MainActor.run {
-                    self.setupPlayer(with: avAsset)
+                    self.setupPlayer(url: url)
                 }
             }
         }
     }
 
     /// 绑定 AVPlayer 准备播放
-    func setupPlayer(with avAsset: AVAsset) {
+    func setupPlayer(url: URL?) {
         cleanup()
 
-        let item = AVPlayerItem(asset: avAsset)
+        guard let url = url else { return }
+        let asset = AVAsset(url: url)
+        let item = AVPlayerItem(asset: asset)
         playerItem = item
         player = AVPlayer(playerItem: item)
 
