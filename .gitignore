@@ -1,0 +1,40 @@
+# Xcode
+*.xcodeproj
+*.xcworkspace
+*.xcuserstate
+*.xccheckout
+*.moved-aside
+DerivedData/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# CocoaPods
+Pods/
+
+# Swift Package Manager
+Packages/
+Package.resolved
+
+# Carthage
+Carthage/
+
+# Misc
+*.swp
+*.swo
+*~
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+Thumbs.db
+
+# Build logs
+build/
+Logs/
+
+# IDE
+.vscode/
+.idea/
+*.xcuserdatad
