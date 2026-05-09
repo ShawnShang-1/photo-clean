@@ -3,7 +3,7 @@
 
 import Photos
 import UIKit
-import AVFoundation
+@preconcurrency import AVFoundation
 
 /// 媒体加载器（actor）：负责图片和视频的资源加载
 actor MediaLoader {
