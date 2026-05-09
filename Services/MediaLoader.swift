@@ -55,8 +55,9 @@ actor MediaLoader {
         }
     }
 
-    /// 加载 AVAsset（用于视频播放）
-    func loadAVAsset(_ asset: PHAsset) async -> AVAsset? {
+    /// 加载视频 URL（用于视频播放）
+    /// Returns URL instead of AVAsset to avoid Sendable crossing actor boundaries
+    func loadVideoURL(_ asset: PHAsset) async -> URL? {
         let options = PHVideoRequestOptions()
         options.deliveryMode = .automatic
         options.isNetworkAccessAllowed = true
@@ -66,7 +67,8 @@ actor MediaLoader {
                 forVideo: asset,
                 options: options
             ) { avAsset, _, _ in
-                continuation.resume(returning: avAsset)
+                let url = (avAsset as? AVURLAsset)?.url
+                continuation.resume(returning: url)
             }
         }
     }

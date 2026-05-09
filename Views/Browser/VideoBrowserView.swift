@@ -275,18 +275,17 @@ struct VideoBrowserView: View {
     private func shareCurrentVideo() {
         guard let asset = vm.currentAsset else { return }
         Task {
-            if let avAsset = await MediaLoader.shared.loadAVAsset(asset) {
-                await MainActor.run {
-                    guard let url = (avAsset as? AVURLAsset)?.url else {
-                        toastMessage = "视频分享暂时不可用"
-                        showToast = true
-                        return
-                    }
-                    let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                       let rootVC = windowScene.windows.first?.rootViewController {
-                        rootVC.present(activityVC, animated: true)
-                    }
+            let url = await MediaLoader.shared.loadVideoURL(asset)
+            await MainActor.run {
+                guard let url = url else {
+                    toastMessage = "视频分享暂时不可用"
+                    showToast = true
+                    return
+                }
+                let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                   let rootVC = windowScene.windows.first?.rootViewController {
+                    rootVC.present(activityVC, animated: true)
                 }
             }
         }
