@@ -15,7 +15,6 @@ settings:
     SWIFT_VERSION: "6.0"
     SWIFT_STRICT_CONCURRENCY: complete
     TARGETED_DEVICE_FAMILY: "1"
-    INFOPLIST_KEY_UILaunchScreen_Generation: YES
 
 targets:
   QuLiu:
