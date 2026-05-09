@@ -1,6 +1,5 @@
-# project.yml - XcodeGen 配置参考
-# 注意：本机未安装 XcodeGen，此文件仅作参考
-# 如需使用 XcodeGen，请先安装：brew install xcodegen
+# project.yml - XcodeGen 配置
+# 修改后运行: /opt/homebrew/bin/xcodegen generate
 
 name: QuLiu
 options:

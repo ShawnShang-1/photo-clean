@@ -108,33 +108,42 @@ struct VideoBrowserView: View {
                 Spacer()
             }
 
-            // 右侧：媒体操作栏
-            VStack {
+            // 底部按钮栏（收藏、分享、撤销）
+            VStack(spacing: 16) {
                 Spacer()
-                MediaActionRail(onAction: { action in
-                    switch action {
-                    case .favorite:
-                        vm.toggleFavorite()
-                        toastMessage = "已收藏"
-                        showToast = true
-                    case .share:
-                        shareCurrentVideo()
-                    case .delete:
-                        showDeleteConfirm = true
-                    case .undo:
+                HStack {
+                    HStack(spacing: 24) {
+                        Button {
+                            vm.toggleFavorite()
+                            toastMessage = "已收藏"
+                            showToast = true
+                        } label: {
+                            Image(systemName: "heart.fill")
+                                .font(.system(size: 22))
+                                .foregroundStyle(.white.opacity(0.8))
+                        }
+                        Button {
+                            shareCurrentVideo()
+                        } label: {
+                            Image(systemName: "square.and.arrow.up.fill")
+                                .font(.system(size: 22))
+                                .foregroundStyle(.white.opacity(0.8))
+                        }
+                    }
+                    Spacer()
+                    Button {
                         vm.loadNextInBatch()
                         toastMessage = "已切换下一条"
                         showToast = true
+                    } label: {
+                        Image(systemName: "arrow.uturn.backward")
+                            .font(.system(size: 22))
+                            .foregroundStyle(.white.opacity(0.6))
                     }
-                })
-                    .padding(.trailing, 12)
-                    .padding(.bottom, 100)
-            }
-            .frame(maxWidth: .infinity, alignment: .trailing)
+                }
+                .padding(.horizontal, 32)
+                .padding(.bottom, 160)
 
-            // 底部：播放控制条
-            VStack {
-                Spacer()
                 playbackControls(player: player)
             }
         }

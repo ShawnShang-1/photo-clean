@@ -1,8 +1,9 @@
-//  GlassCardView.swift
-//  毛玻璃卡片：背景模糊 + 前景主媒体叠加层
+// GlassCardView.swift
+// 毛玻璃卡片：背景模糊 + 前景主媒体叠加层 + 底部信息栏
 
 import SwiftUI
 import Photos
+import CoreLocation
 
 struct GlassCardView: View {
     let asset: PHAsset?
@@ -24,6 +25,16 @@ struct GlassCardView: View {
                     .onTapGesture {
                         onTap?()
                     }
+            }
+
+            // 底部：时间地点信息玻璃条
+            if asset != nil {
+                VStack {
+                    Spacer()
+                    infoBar
+                        .padding(.horizontal, 16)
+                        .padding(.bottom, 16)
+                }
             }
         }
         .onChange(of: asset?.localIdentifier) { _, _ in
@@ -50,6 +61,35 @@ struct GlassCardView: View {
         } else {
             Rectangle()
                 .fill(.ultraThinMaterial)
+        }
+    }
+
+    private var infoBar: some View {
+        HStack(spacing: 12) {
+            if let date = asset?.creationDate {
+                Text(date.formatted(date: .abbreviated, time: .shortened))
+                    .font(.caption)
+                    .foregroundStyle(.white.opacity(0.9))
+            }
+
+            if asset?.location != nil {
+                Image(systemName: "location.fill")
+                    .font(.caption2)
+                    .foregroundStyle(.white.opacity(0.7))
+            }
+
+            Spacer()
+
+            Image(systemName: "info.circle.fill")
+                .font(.caption)
+                .foregroundStyle(.white.opacity(0.5))
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
+        .background(.ultraThinMaterial)
+        .clipShape(Capsule())
+        .onTapGesture {
+            onTap?()
         }
     }
 

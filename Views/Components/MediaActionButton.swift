@@ -16,12 +16,12 @@ struct MediaActionButton: View {
         }) {
             VStack(spacing: 4) {
                 Circle()
-                    .fill(isDestructive ? Color.red.opacity(0.85) : Color.white.opacity(0.25))
+                    .fill(.ultraThinMaterial)
                     .frame(width: 44, height: 44)
                     .overlay(
                         Image(systemName: icon)
                             .font(.system(size: 18, weight: .medium))
-                            .foregroundStyle(isDestructive ? .white : .white)
+                            .foregroundStyle(.white)
                     )
                 Text(label)
                     .font(.system(size: 10, weight: .medium))

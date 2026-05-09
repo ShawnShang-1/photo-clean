@@ -14,11 +14,9 @@ struct MediaActionRail: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            MediaActionButton(icon: "heart.fill", label: "收藏", action: { onAction(.favorite) }, isDestructive: false)
-            MediaActionButton(icon: "square.and.arrow.up.fill", label: "分享", action: { onAction(.share) }, isDestructive: false)
-            MediaActionButton(icon: "trash.fill", label: "删除", action: { onAction(.delete) }, isDestructive: true)
             MediaActionButton(icon: "arrow.uturn.backward", label: "撤销", action: { onAction(.undo) }, isDestructive: false)
         }
+        .opacity(0.6)
     }
 }
 

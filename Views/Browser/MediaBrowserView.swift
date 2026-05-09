@@ -106,32 +106,46 @@ struct MediaBrowserView: View {
                 )
             }
 
-            // 底部操作提示
-            HStack {
-                Text("左右滑动切换")
+            // 底部操作提示 + 底部按钮栏
+            VStack(spacing: 16) {
+                Spacer()
+                HStack {
+                    HStack(spacing: 24) {
+                        Button {
+                            vm.toggleFavorite()
+                            toastMessage = vm.favoritedIdentifiers.contains(vm.currentAsset?.localIdentifier ?? "") ? "已收藏" : "已取消收藏"
+                            showToast = true
+                        } label: {
+                            Image(systemName: "heart.fill")
+                                .font(.system(size: 22))
+                                .foregroundStyle(.white.opacity(0.8))
+                        }
+                        Button {
+                            shareCurrentAsset()
+                        } label: {
+                            Image(systemName: "square.and.arrow.up.fill")
+                                .font(.system(size: 22))
+                                .foregroundStyle(.white.opacity(0.8))
+                        }
+                    }
+                    Spacer()
+                    Button {
+                        toastMessage = "撤销功能开发中"
+                        showToast = true
+                    } label: {
+                        Image(systemName: "arrow.uturn.backward")
+                            .font(.system(size: 22))
+                            .foregroundStyle(.white.opacity(0.6))
+                    }
+                }
+                .padding(.horizontal, 32)
+                .padding(.bottom, 120)
+
+                Text("上滑删除，左右滑动切换")
                     .font(.caption)
                     .foregroundStyle(.white.opacity(0.4))
-                Spacer()
+                    .padding(.bottom, 20)
             }
-            .padding(.horizontal, 20)
-            .padding(.bottom, 8)
-        }
-        .overlay(alignment: .trailing) {
-            // 右侧：媒体操作栏
-            MediaActionRail(onAction: { action in
-                switch action {
-                case .favorite:
-                    vm.toggleFavorite()
-                case .share:
-                    shareCurrentAsset()
-                case .delete:
-                    showDeleteConfirm = true
-                case .undo:
-                    toastMessage = "撤销功能开发中"
-                    showToast = true
-                }
-            })
-            .padding(.trailing, 12)
         }
         .confirmationDialog("确认删除", isPresented: $showDeleteConfirm) {
             Button("删除", role: .destructive) {

@@ -11,9 +11,6 @@ struct StatsView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
-                // 顶部 Pro Banner 占位
-                ProBannerView()
-
                 // 总计腾出空间
                 VStack(spacing: 8) {
                     Text("总计腾出空间")
